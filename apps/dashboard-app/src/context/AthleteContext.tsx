@@ -22,7 +22,7 @@ interface AthleteContextType {
   athletes: Athlete[];
   addAthlete: (athlete: Omit<Athlete, "id">) => Promise<void>;
   deleteAthlete: (id: string) => Promise<void>;
-  updateAthlete: (athlete: Athlete) => Promise<void>;
+  updateAthlete: (athlete: Omit<Athlete, "metrics">) => Promise<void>;
   addMetric: (athleteId: string, metric: Omit<Metric, "id">) => Promise<void>;
 }
 
