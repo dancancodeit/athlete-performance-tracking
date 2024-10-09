@@ -22,12 +22,12 @@ interface AthleteContextType {
   athletes: Athlete[];
   addAthlete: (athlete: Omit<Athlete, "id">) => Promise<void>;
   deleteAthlete: (id: string) => Promise<void>;
+  updateAthlete: (athlete: Athlete) => Promise<void>;
   addMetric: (athleteId: string, metric: Omit<Metric, "id">) => Promise<void>;
 }
 
 // Create the context
 const AthleteContext = createContext<AthleteContextType | undefined>(undefined);
-
 
 export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -50,8 +50,7 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["athletes"], // Assume metrics are queried under this queryKey
-        refetchType: "all",
+        queryKey: ["athletes"],
       });
     },
   });
@@ -61,10 +60,25 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationFn: async (id: string) => {
       await axiosInstance.delete(`/athletes/${id}`);
     },
-    onSuccess: (data, {}) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["athletes"], 
-        refetchType: "all",
+        queryKey: ["athletes"],
+      });
+    },
+  });
+
+  // Mutation for updating an athlete
+  const updateAthleteMutation = useMutation({
+    mutationFn: async (athlete: Omit<Athlete, "metrics">) => {
+      await axiosInstance.put(`/athletes/${athlete.id}`, athlete);
+    },
+    onSuccess: (data, { id }) => {
+      // Invalidate the specific athlete's query to fetch the updated data
+      queryClient.invalidateQueries({
+        queryKey: ["athletes"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["athlete", id],
       });
     },
   });
@@ -81,9 +95,9 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
       await axiosInstance.post(`/athletes/${athleteId}/metrics`, metric);
     },
     onSuccess: (data, { athleteId }) => {
-      // Instead of invalidating the whole athletes list, only invalidate the specific athlete's data
+      // Invalidate the specific athlete's data after adding a metric
       queryClient.invalidateQueries({
-        queryKey: ['athlete', athleteId],
+        queryKey: ["athlete", athleteId],
         refetchType: "all",
       });
     },
@@ -96,10 +110,18 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
       addAthlete: (athlete: Omit<Athlete, "id">) =>
         addAthleteMutation.mutateAsync(athlete),
       deleteAthlete: (id: string) => deleteAthleteMutation.mutateAsync(id),
-      addMetric: (athleteId: string, metric: Omit<Metric, "id"|"date">) =>
+      updateAthlete: (athlete: Omit<Athlete, "metrics">) =>
+        updateAthleteMutation.mutateAsync(athlete),
+      addMetric: (athleteId: string, metric: Omit<Metric, "id">) =>
         addMetricMutation.mutateAsync({ athleteId, metric }),
     }),
-    [athletes, addAthleteMutation, deleteAthleteMutation, addMetricMutation]
+    [
+      athletes,
+      addAthleteMutation,
+      deleteAthleteMutation,
+      updateAthleteMutation,
+      addMetricMutation,
+    ]
   );
 
   return (

@@ -23,6 +23,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import UpdateAthlete from "./pages/UpdateAthlete";
 
 setupIonicReact();
 
@@ -36,6 +37,7 @@ const App: React.FC = () => (
           <IonRouterOutlet>
             <Route exact path="/" component={AthleteList} />
             <Route exact path="/add-athlete" component={AddAthlete} />
+            <Route exact path="/edit-athlete/:id" component={UpdateAthlete} />
             <Route
               exact
               path="/athlete-details/:id"

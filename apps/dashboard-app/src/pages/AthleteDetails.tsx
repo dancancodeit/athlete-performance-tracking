@@ -1,4 +1,3 @@
-// src/pages/AthleteDetails.tsx
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -42,8 +41,12 @@ const AthleteDetails: React.FC = () => {
 
   const handleDeleteAthlete = () => {
     deleteAthlete(athlete.id);
-    history.push('/'); // Navigate to the home page
-  }
+    history.push('/'); // Navigate to the home page after deletion
+  };
+
+  const handleEditAthlete = () => {
+    history.push(`/edit-athlete/${id}`); // Navigate to the edit-athlete page
+  };
 
   // Handle form submission
   const handleAddMetric = async () => {
@@ -127,6 +130,12 @@ const AthleteDetails: React.FC = () => {
         <IonButton color="danger" onClick={handleDeleteAthlete}>
           Delete Athlete
         </IonButton>
+
+        {/* New Edit Button */}
+        <IonButton color="primary" onClick={handleEditAthlete}>
+          Edit Athlete
+        </IonButton>
+
         <IonList>
           {athlete.metrics.map((metric: any) => (
             <IonItem key={metric.id}>
