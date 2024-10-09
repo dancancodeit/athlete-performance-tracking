@@ -88,18 +88,6 @@ const AthleteDetails: React.FC = () => {
         />
       </IonHeader>
       <IonContent>
-        <IonList>
-          {athlete.metrics.map((metric: any) => (
-            <IonItem key={metric.id}>
-              <IonLabel>
-                <h2>{metric.metricType}</h2>
-                <p>Value: {metric.value}</p>
-                <p>Unit: {metric.unit}</p>
-              </IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
-
         {/* Metric form */}
         <IonList>
           <IonItem>
@@ -136,10 +124,20 @@ const AthleteDetails: React.FC = () => {
         </IonList>
 
         <IonButton onClick={handleAddMetric}>Add Metric</IonButton>
-
         <IonButton color="danger" onClick={handleDeleteAthlete}>
           Delete Athlete
         </IonButton>
+        <IonList>
+          {athlete.metrics.map((metric: any) => (
+            <IonItem key={metric.id}>
+              <IonLabel>
+                <h2>{metric.metricType}</h2>
+                <p>Value: {metric.value}</p>
+                <p>Unit: {metric.unit}</p>
+              </IonLabel>
+            </IonItem>
+          ))}
+        </IonList>
       </IonContent>
     </IonPage>
   );

@@ -83,7 +83,7 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
     onSuccess: (data, { athleteId }) => {
       // Instead of invalidating the whole athletes list, only invalidate the specific athlete's data
       queryClient.invalidateQueries({
-        queryKey: ["athletes", athleteId, "metrics"],
+        queryKey: ['athlete', athleteId],
         refetchType: "all",
       });
     },

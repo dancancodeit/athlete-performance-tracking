@@ -12,13 +12,15 @@ import {
 } from "@ionic/react";
 import { useAthleteContext } from "../context/AthleteContext";
 import SharedHeader from "../components/SharedHeader";
+import { useHistory } from "react-router";
 
 const AddAthlete: React.FC = () => {
   const { addAthlete } = useAthleteContext();
   const [name, setName] = useState("");
   const [age, setAge] = useState<number | "">("");
   const [team, setTeam] = useState("");
-
+  const history = useHistory();
+  
   const handleSubmit = () => {
     if (!name || !age || !team) {
       alert("Please fill in all fields");
@@ -34,7 +36,7 @@ const AddAthlete: React.FC = () => {
     };
 
     addAthlete(newAthlete);
-    alert("Athlete added successfully!");
+    history.push('/')
   };
 
   return (
