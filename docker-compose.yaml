@@ -11,7 +11,7 @@ services:
       - "4000:4000"
     environment:
       - DATABASE_URL=postgresql://postgres:password@db:5432/athletes_db
-    command: npm run dev
+    command: sh -c "npm run migrate && npm run dev"
     depends_on:
       - db
 
