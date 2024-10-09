@@ -14,7 +14,6 @@ import SharedHeader from "../components/SharedHeader"; // Import the shared head
 
 const AthleteList: React.FC = () => {
   const { athletes } = useAthleteContext();
-  // console.log(athletes);
 
   return (
     <IonPage>

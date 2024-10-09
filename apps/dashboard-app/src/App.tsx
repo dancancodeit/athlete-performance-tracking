@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import AthleteList from "./pages/AthleteList";
 import AddAthlete from "./pages/AddAthlete";
 import AthleteDetails from "./pages/AthleteDetails";
-import AddMetric from "./pages/AddMetric";
 import { AthleteProvider } from "./context/AthleteContext"; // Import the AthleteProvider
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

@@ -16,6 +16,7 @@ import {
 import { useAthleteContext } from "../context/AthleteContext";
 import axiosInstance from "../utils/axiosInstance"; // Import the Axios instance
 import SharedHeader from "../components/SharedHeader";
+import { useHistory } from 'react-router-dom';
 
 const AthleteDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,8 +25,8 @@ const AthleteDetails: React.FC = () => {
   const [metricValue, setMetricValue] = useState("");
   const [metricUnit, setMetricUnit] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+  const history = useHistory();
 
-  console.log(id);
   // Fetch athlete details
   const {
     data: athlete,
@@ -38,6 +39,11 @@ const AthleteDetails: React.FC = () => {
       return response.data;
     },
   });
+
+  const handleDeleteAthlete = () => {
+    deleteAthlete(athlete.id);
+    history.push('/'); // Navigate to the home page
+  }
 
   // Handle form submission
   const handleAddMetric = async () => {
@@ -86,10 +92,9 @@ const AthleteDetails: React.FC = () => {
           {athlete.metrics.map((metric: any) => (
             <IonItem key={metric.id}>
               <IonLabel>
-                <h2>{metric.type}</h2>
+                <h2>{metric.metricType}</h2>
                 <p>Value: {metric.value}</p>
                 <p>Unit: {metric.unit}</p>
-                <p>Date: {metric.timestamp}</p>
               </IonLabel>
             </IonItem>
           ))}
@@ -101,7 +106,7 @@ const AthleteDetails: React.FC = () => {
             <IonLabel position="stacked">Metric Type</IonLabel>
             <IonInput
               value={metricType}
-              onIonChange={(e) => setMetricType(e.detail.value!)}
+              onInput={(e: any) => setMetricType(e.target.value)}
               placeholder="e.g., Speed"
             />
           </IonItem>
@@ -110,7 +115,7 @@ const AthleteDetails: React.FC = () => {
             <IonInput
               type="number"
               value={metricValue}
-              onIonChange={(e) => setMetricValue(e.detail.value!)}
+              onInput={(e: any) => setMetricValue(e.target.value)}
               placeholder="e.g., 20"
             />
           </IonItem>
@@ -118,7 +123,7 @@ const AthleteDetails: React.FC = () => {
             <IonLabel position="stacked">Metric Unit</IonLabel>
             <IonInput
               value={metricUnit}
-              onIonChange={(e) => setMetricUnit(e.detail.value!)}
+              onInput={(e: any) => setMetricUnit(e.target.value)}
               placeholder="e.g., kg"
             />
           </IonItem>
@@ -132,7 +137,7 @@ const AthleteDetails: React.FC = () => {
 
         <IonButton onClick={handleAddMetric}>Add Metric</IonButton>
 
-        <IonButton color="danger" onClick={() => deleteAthlete(athlete.id)}>
+        <IonButton color="danger" onClick={handleDeleteAthlete}>
           Delete Athlete
         </IonButton>
       </IonContent>

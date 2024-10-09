@@ -1,13 +1,7 @@
 import { Hono } from 'hono';
 import dotenv from 'dotenv';
 import { serve } from '@hono/node-server'
-// import { logger } from 'hono/logger'
-import { createMiddleware } from 'hono/factory'
 
-const logger = createMiddleware(async (c, next) => {
-  console.log(`[${c.req.method}] ${c.req.url}`)
-  await next()
-})
 import {
     createAthlete,
     getAllAthletes,
@@ -34,9 +28,6 @@ app.post('/athletes/:id/metrics', addMetric);
 app.get('/athletes/:id/metrics', getMetrics);
 
 app.get('/', (c) => c.text('Athlete Performance API'));
-
-app.use(logger);
-
 
 serve({
   fetch: app.fetch,

@@ -8,8 +8,6 @@ export const addMetric = async (c: Context) => {
   const id = c.req.param('id');
   const { type, value, unit } = await c.req.json();
 
-  console.log(c.req.json());
-  console.log(id);
   const newMetric = await prisma.performanceMetric.create({
     data: {
       athleteId: id,

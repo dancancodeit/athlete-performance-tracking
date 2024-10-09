@@ -43,25 +43,25 @@ const AddAthlete: React.FC = () => {
       <IonContent>
         <IonList>
           <IonItem>
-          <IonLabel position="stacked">Name</IonLabel>
+            <IonLabel position="stacked">Name</IonLabel>
             <IonInput
               value={name}
-              onIonChange={(e) => setName(e.detail.value!)}
+              onInput={(e: any) => setName(e.target.value)}
             />
           </IonItem>
           <IonItem>
-          <IonLabel position="stacked">Age</IonLabel>
+            <IonLabel position="stacked">Age</IonLabel>
             <IonInput
               value={age}
               type="number"
-              onIonChange={(e) => setAge(Number(e.detail.value!))}
+              onInput={(e: any) => setAge(Number(e.target.value))}
             />
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Team</IonLabel>
             <IonInput
               value={team}
-              onIonChange={(e) => setTeam(e.detail.value!)}
+              onInput={(e: any) => setTeam(e.target.value)}
             />
           </IonItem>
 
