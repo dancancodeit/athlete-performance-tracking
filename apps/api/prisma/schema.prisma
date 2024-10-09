@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+model Athlete {
+  id        String   @id @default(uuid())
+  name      String
+  age       Int
+  team      String
+  metrics   PerformanceMetric[]
+}
+
+model PerformanceMetric {
+  id         String   @id @default(uuid())
+  athleteId  String
+  metricType String
+  value      Float
+  unit       String
+  timestamp  DateTime @default(now())
+  athlete    Athlete  @relation(fields: [athleteId], references: [id])
+}

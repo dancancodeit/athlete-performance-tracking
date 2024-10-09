@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./apps/api:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4000:4000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/athletes_db
+    command: npm run dev
+    depends_on:
+      - db
+
+  dashboard-app:
+    build:
+      context: ./apps/dashboard-app
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./apps/dashboard-app:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    command: npm start
+    depends_on:
+      - api
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: athletes_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:
