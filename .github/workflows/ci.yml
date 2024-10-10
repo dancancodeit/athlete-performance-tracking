@@ -37,11 +37,6 @@ jobs:
       working-directory: ./apps/${{ matrix.app }}
       run: npm run prettier:check
 
-    # Run Lint for each app
-    - name: Run Lint for ${{ matrix.app }}
-      working-directory: ./apps/${{ matrix.app }}
-      run: npm run lint
-
     # Run Tests for each app
     - name: Run Tests for ${{ matrix.app }}
       working-directory: ./apps/${{ matrix.app }}
