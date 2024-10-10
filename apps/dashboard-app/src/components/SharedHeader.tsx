@@ -1,7 +1,13 @@
 // src/components/SharedHeader.tsx
 
 import React from 'react';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton } from '@ionic/react';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
 interface SharedHeaderProps {
@@ -9,7 +15,10 @@ interface SharedHeaderProps {
   showHomeButton?: boolean;
 }
 
-const SharedHeader: React.FC<SharedHeaderProps> = ({ title, showHomeButton }) => {
+const SharedHeader: React.FC<SharedHeaderProps> = ({
+  title,
+  showHomeButton,
+}) => {
   const history = useHistory();
 
   const handleHomeClick = () => {

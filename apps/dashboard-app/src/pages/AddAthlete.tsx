@@ -1,6 +1,6 @@
 // src/pages/AddAthlete.tsx
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IonContent,
   IonInput,
@@ -9,21 +9,21 @@ import {
   IonItem,
   IonList,
   IonLabel,
-} from "@ionic/react";
-import { useAthleteContext } from "../context/AthleteContext";
-import SharedHeader from "../components/SharedHeader";
-import { useHistory } from "react-router";
+} from '@ionic/react';
+import { useAthleteContext } from '../context/AthleteContext';
+import SharedHeader from '../components/SharedHeader';
+import { useHistory } from 'react-router';
 
 const AddAthlete: React.FC = () => {
   const { addAthlete } = useAthleteContext();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState<number | "">("");
-  const [team, setTeam] = useState("");
+  const [name, setName] = useState('');
+  const [age, setAge] = useState<number | ''>('');
+  const [team, setTeam] = useState('');
   const history = useHistory();
-  
+
   const handleSubmit = () => {
     if (!name || !age || !team) {
-      alert("Please fill in all fields");
+      alert('Please fill in all fields');
       return;
     }
 
@@ -36,7 +36,7 @@ const AddAthlete: React.FC = () => {
     };
 
     addAthlete(newAthlete);
-    history.push('/')
+    history.push('/');
   };
 
   return (

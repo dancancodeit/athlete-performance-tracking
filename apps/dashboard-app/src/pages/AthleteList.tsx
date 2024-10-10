@@ -1,6 +1,6 @@
 // src/pages/AthleteList.tsx
 
-import React from "react";
+import React from 'react';
 import {
   IonList,
   IonItem,
@@ -8,9 +8,9 @@ import {
   IonButton,
   IonPage,
   IonContent,
-} from "@ionic/react";
-import { useAthleteContext } from "../context/AthleteContext";
-import SharedHeader from "../components/SharedHeader"; // Import the shared header
+} from '@ionic/react';
+import { useAthleteContext } from '../context/AthleteContext';
+import SharedHeader from '../components/SharedHeader'; // Import the shared header
 
 const AthleteList: React.FC = () => {
   const { athletes } = useAthleteContext();

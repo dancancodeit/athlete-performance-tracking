@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useMemo } from "react";
-import axiosInstance from "../utils/axiosInstance";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React, { createContext, useContext, useMemo } from 'react';
+import axiosInstance from '../utils/axiosInstance';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Define interfaces
 interface Metric {
@@ -20,10 +20,10 @@ interface Athlete {
 
 interface AthleteContextType {
   athletes: Athlete[];
-  addAthlete: (athlete: Omit<Athlete, "id">) => Promise<void>;
+  addAthlete: (athlete: Omit<Athlete, 'id'>) => Promise<void>;
   deleteAthlete: (id: string) => Promise<void>;
-  updateAthlete: (athlete: Omit<Athlete, "metrics">) => Promise<void>;
-  addMetric: (athleteId: string, metric: Omit<Metric, "id">) => Promise<void>;
+  updateAthlete: (athlete: Omit<Athlete, 'metrics'>) => Promise<void>;
+  addMetric: (athleteId: string, metric: Omit<Metric, 'id'>) => Promise<void>;
 }
 
 // Create the context
@@ -36,21 +36,21 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Fetch all athletes
   const { data: athletes = [] } = useQuery<Athlete[]>({
-    queryKey: ["athletes"],
+    queryKey: ['athletes'],
     queryFn: async () => {
-      const response = await axiosInstance.get("/athletes");
+      const response = await axiosInstance.get('/athletes');
       return response.data;
     },
   });
 
   // Mutation for adding an athlete
   const addAthleteMutation = useMutation({
-    mutationFn: async (athlete: Omit<Athlete, "id">) => {
-      await axiosInstance.post("/athletes", athlete);
+    mutationFn: async (athlete: Omit<Athlete, 'id'>) => {
+      await axiosInstance.post('/athletes', athlete);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["athletes"],
+        queryKey: ['athletes'],
       });
     },
   });
@@ -62,23 +62,23 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["athletes"],
+        queryKey: ['athletes'],
       });
     },
   });
 
   // Mutation for updating an athlete
   const updateAthleteMutation = useMutation({
-    mutationFn: async (athlete: Omit<Athlete, "metrics">) => {
+    mutationFn: async (athlete: Omit<Athlete, 'metrics'>) => {
       await axiosInstance.put(`/athletes/${athlete.id}`, athlete);
     },
     onSuccess: (data, { id }) => {
       // Invalidate the specific athlete's query to fetch the updated data
       queryClient.invalidateQueries({
-        queryKey: ["athletes"],
+        queryKey: ['athletes'],
       });
       queryClient.invalidateQueries({
-        queryKey: ["athlete", id],
+        queryKey: ['athlete', id],
       });
     },
   });
@@ -90,15 +90,15 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
       metric,
     }: {
       athleteId: string;
-      metric: Omit<Metric, "id">;
+      metric: Omit<Metric, 'id'>;
     }) => {
       await axiosInstance.post(`/athletes/${athleteId}/metrics`, metric);
     },
     onSuccess: (data, { athleteId }) => {
       // Invalidate the specific athlete's data after adding a metric
       queryClient.invalidateQueries({
-        queryKey: ["athlete", athleteId],
-        refetchType: "all",
+        queryKey: ['athlete', athleteId],
+        refetchType: 'all',
       });
     },
   });
@@ -107,12 +107,12 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
   const value = useMemo(
     () => ({
       athletes,
-      addAthlete: (athlete: Omit<Athlete, "id">) =>
+      addAthlete: (athlete: Omit<Athlete, 'id'>) =>
         addAthleteMutation.mutateAsync(athlete),
       deleteAthlete: (id: string) => deleteAthleteMutation.mutateAsync(id),
-      updateAthlete: (athlete: Omit<Athlete, "metrics">) =>
+      updateAthlete: (athlete: Omit<Athlete, 'metrics'>) =>
         updateAthleteMutation.mutateAsync(athlete),
-      addMetric: (athleteId: string, metric: Omit<Metric, "id">) =>
+      addMetric: (athleteId: string, metric: Omit<Metric, 'id'>) =>
         addMetricMutation.mutateAsync({ athleteId, metric }),
     }),
     [
@@ -121,7 +121,7 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
       deleteAthleteMutation,
       updateAthleteMutation,
       addMetricMutation,
-    ]
+    ],
   );
 
   return (
@@ -133,7 +133,7 @@ export const AthleteProvider: React.FC<{ children: React.ReactNode }> = ({
 export const useAthleteContext = () => {
   const context = useContext(AthleteContext);
   if (!context) {
-    throw new Error("useAthleteContext must be used within an AthleteProvider");
+    throw new Error('useAthleteContext must be used within an AthleteProvider');
   }
   return context;
 };

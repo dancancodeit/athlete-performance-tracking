@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   IonContent,
   IonHeader,
@@ -11,18 +11,18 @@ import {
   IonButton,
   IonInput,
   IonText,
-} from "@ionic/react";
-import { useAthleteContext } from "../context/AthleteContext";
-import axiosInstance from "../utils/axiosInstance"; // Import the Axios instance
-import SharedHeader from "../components/SharedHeader";
+} from '@ionic/react';
+import { useAthleteContext } from '../context/AthleteContext';
+import axiosInstance from '../utils/axiosInstance'; // Import the Axios instance
+import SharedHeader from '../components/SharedHeader';
 import { useHistory } from 'react-router-dom';
 
 const AthleteDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { deleteAthlete, addMetric } = useAthleteContext();
-  const [metricType, setMetricType] = useState("");
-  const [metricValue, setMetricValue] = useState("");
-  const [metricUnit, setMetricUnit] = useState("");
+  const [metricType, setMetricType] = useState('');
+  const [metricValue, setMetricValue] = useState('');
+  const [metricUnit, setMetricUnit] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
   const history = useHistory();
 
@@ -32,7 +32,7 @@ const AthleteDetails: React.FC = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["athlete", id],
+    queryKey: ['athlete', id],
     queryFn: async () => {
       const response = await axiosInstance.get(`/athletes/${id}`);
       return response.data;
@@ -51,14 +51,14 @@ const AthleteDetails: React.FC = () => {
   // Handle form submission
   const handleAddMetric = async () => {
     if (!metricType || !metricValue || !metricUnit) {
-      setFormError("All fields are required.");
+      setFormError('All fields are required.');
       return;
     }
 
     // Convert value to a float
     const value = parseFloat(metricValue);
     if (isNaN(value)) {
-      setFormError("Metric value must be a number.");
+      setFormError('Metric value must be a number.');
       return;
     }
 
@@ -69,12 +69,12 @@ const AthleteDetails: React.FC = () => {
         value,
       });
       // Clear form and error state after submission
-      setMetricType("");
-      setMetricValue("");
-      setMetricUnit("");
+      setMetricType('');
+      setMetricValue('');
+      setMetricUnit('');
       setFormError(null);
     } catch (error) {
-      setFormError("Failed to add metric.");
+      setFormError('Failed to add metric.');
     }
   };
 

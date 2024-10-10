@@ -1,6 +1,6 @@
 // src/pages/EditAthlete.tsx
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonInput,
@@ -10,32 +10,36 @@ import {
   IonList,
   IonLabel,
   IonText,
-} from "@ionic/react";
-import { useParams, useHistory } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../utils/axiosInstance";
-import { useAthleteContext } from "../context/AthleteContext";
-import SharedHeader from "../components/SharedHeader";
+} from '@ionic/react';
+import { useParams, useHistory } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import axiosInstance from '../utils/axiosInstance';
+import { useAthleteContext } from '../context/AthleteContext';
+import SharedHeader from '../components/SharedHeader';
 
 const UpdateAthlete: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { updateAthlete } = useAthleteContext();
   const history = useHistory();
 
-  const [name, setName] = useState("");
-  const [age, setAge] = useState<number | "">("");
-  const [team, setTeam] = useState("");
+  const [name, setName] = useState('');
+  const [age, setAge] = useState<number | ''>('');
+  const [team, setTeam] = useState('');
   const [formError, setFormError] = useState<string | null>(null);
 
   // Fetch athlete details for editing
-  const { data: athlete, isLoading, error } = useQuery({
-    queryKey: ["athlete", id],
+  const {
+    data: athlete,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['athlete', id],
     queryFn: async () => {
       const response = await axiosInstance.get(`/athletes/${id}`);
       return response.data;
     },
   });
-  
+
   useEffect(() => {
     if (athlete) {
       setName(athlete.name);
@@ -46,7 +50,7 @@ const UpdateAthlete: React.FC = () => {
 
   const handleSubmit = async () => {
     if (!name || !age || !team) {
-      setFormError("Please fill in all fields.");
+      setFormError('Please fill in all fields.');
       return;
     }
 
@@ -61,7 +65,7 @@ const UpdateAthlete: React.FC = () => {
       await updateAthlete(updatedAthlete); // Assuming updateAthlete is defined in your context
       history.push(`/athlete-details/${id}`); // Navigate back to athlete details page
     } catch (error) {
-      setFormError("Failed to update athlete.");
+      setFormError('Failed to update athlete.');
     }
   };
 
@@ -78,7 +82,9 @@ const UpdateAthlete: React.FC = () => {
             <IonLabel position="stacked">Name</IonLabel>
             <IonInput
               value={name}
-              onInput={(e) => setName((e.target as unknown as HTMLInputElement).value)}
+              onInput={(e) =>
+                setName((e.target as unknown as HTMLInputElement).value)
+              }
             />
           </IonItem>
           <IonItem>
@@ -86,14 +92,18 @@ const UpdateAthlete: React.FC = () => {
             <IonInput
               type="number"
               value={age}
-              onInput={(e) => setAge(Number((e.target as unknown as HTMLInputElement).value))}
+              onInput={(e) =>
+                setAge(Number((e.target as unknown as HTMLInputElement).value))
+              }
             />
           </IonItem>
           <IonItem>
             <IonLabel position="stacked">Team</IonLabel>
             <IonInput
               value={team}
-              onInput={(e) => setTeam((e.target as unknown as HTMLInputElement).value)}
+              onInput={(e) =>
+                setTeam((e.target as unknown as HTMLInputElement).value)
+              }
             />
           </IonItem>
 

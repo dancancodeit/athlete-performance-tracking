@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 import { serve } from '@hono/node-server';
 
 import {
-    createAthlete,
-    getAllAthletes,
-    getAthleteById,
-    updateAthlete,
-    deleteAthlete,
+  createAthlete,
+  getAllAthletes,
+  getAthleteById,
+  updateAthlete,
+  deleteAthlete,
 } from './controllers/athleteController';
 import { addMetric, getMetrics } from './controllers/metricController';
 import { authenticateJWT } from './utils/auth';
@@ -30,6 +30,6 @@ app.get('/athletes/:id/metrics', authenticateJWT, getMetrics);
 app.get('/', (c) => c.text('Athlete Performance API'));
 
 serve({
-    fetch: app.fetch,
-    port: 4000,
+  fetch: app.fetch,
+  port: 4000,
 });
