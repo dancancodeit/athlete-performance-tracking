@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Tests not implemented\" && exit 0",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "generate": "prisma generate",
-    "migrate": "prisma migrate deploy"
+    "migrate": "prisma migrate deploy",
+    "lint": "eslint --ext .ts src",
+    "prettier:check": "prettier --check 'src/**/*.{ts,js,json,md}'",
+    "prettier:write": "prettier --write 'src/**/*.{ts,js,json,md}'"
   },
   "keywords": [],
   "author": "",

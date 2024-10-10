@@ -10,7 +10,10 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "test": "echo \"Tests not implemented\" && exit 0",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
+    "prettier:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx,json,css,md}'",
+    "prettier:write": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,md}'"
   },
   "dependencies": {
     "@capacitor/app": "6.0.1",

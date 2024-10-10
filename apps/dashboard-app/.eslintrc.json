@@ -1,0 +1,17 @@
+{
+    "extends": ["react-app", "react-app/jest", "prettier"],
+    "plugins": ["react", "jsx-a11y", "import"],
+    "rules": {
+      "no-unused-vars": "warn",
+      "react/jsx-uses-react": "off", 
+      "react/react-in-jsx-scope": "off",
+      "import/order": [
+        "error",
+        {
+          "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+          "newlines-between": "always"
+        }
+      ]
+    }
+  }
+  
