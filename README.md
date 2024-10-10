@@ -24,9 +24,9 @@ Make sure you have the following installed on your machine:
 
 Simply run Docker Compose to start the app and the database. This will also handle database migrations automatically:
 
-\`\`\`bash
+```bash
 docker-compose up
-\`\`\`
+```
 
 This will spin up the following services:
 - **Frontend** (React/Ionic): Available at [http://localhost:3000](http://localhost:3000)
@@ -64,7 +64,7 @@ To enable hot-reloading for development, the frontend app already supports hot r
 
 For production, the application is built and served using an Nginx server. The frontend app is built and copied into the Nginx container, which serves static files. The backend Node.js app handles the API requests.
 
-```bash
+```
 docker-compose -f docker-compose.prod.yml up --build
 ```
 
