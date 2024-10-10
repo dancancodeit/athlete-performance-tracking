@@ -1,5 +1,3 @@
-// src/pages/AthleteList.tsx
-
 import React from 'react';
 import {
   IonList,

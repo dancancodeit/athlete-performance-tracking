@@ -1,5 +1,3 @@
-// src/pages/AddAthlete.tsx
-
 import React, { useState } from 'react';
 import {
   IonContent,

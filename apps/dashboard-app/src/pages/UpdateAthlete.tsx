@@ -1,5 +1,3 @@
-// src/pages/EditAthlete.tsx
-
 import React, { useState, useEffect } from 'react';
 import {
   IonContent,

@@ -60,15 +60,11 @@ To enable hot-reloading for development, the frontend app already supports hot r
 - **Prisma**: ORM for database migrations and querying.
 - **Docker**: Containerization of the application for consistent development and deployment.
 
-## Production
-
-For production, the application is built and served using an Nginx server. The frontend app is built and copied into the Nginx container, which serves static files. The backend Node.js app handles the API requests.
-
-```
-docker-compose -f docker-compose.prod.yml up --build
-```
-
-This will start both the frontend and backend in a production environment.
+## Extras
+- Resource creation is protected via JWT. Visit homepage to recieve JWT as a cookie
+- CI tests and pretty is ran in ci pipeline
+- intentionally opted out of caching since there are no major joins and the disadvantage of maintaining a cache outways the performance gain
+- code splitting also doesn't provide any benefit in a package this small
 
 ## License
 

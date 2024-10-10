@@ -1,5 +1,3 @@
-// src/components/SharedHeader.tsx
-
 import React from 'react';
 import {
   IonHeader,
