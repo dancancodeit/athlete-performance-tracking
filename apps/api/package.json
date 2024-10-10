@@ -8,7 +8,6 @@
     "build": "tsc",
     "generate": "prisma generate",
     "migrate": "prisma migrate deploy",
-    "lint": "eslint --ext .ts src",
     "prettier:check": "prettier --check 'src/**/*.{ts,js,json,md}'",
     "prettier:write": "prettier --write 'src/**/*.{ts,js,json,md}'"
   },
