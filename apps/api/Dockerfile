@@ -47,4 +47,4 @@ COPY --from=build /usr/src/app/dist ./dist
 EXPOSE 3000
 
 # Start the server
-CMD ["node", "dist/index.js"]  # Adjust if your entry point is different
+CMD ["node", "dist/index.js"]
