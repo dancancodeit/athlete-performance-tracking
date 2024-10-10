@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import dotenv from 'dotenv';
-import { serve } from '@hono/node-server'
+import { serve } from '@hono/node-server';
 
 import {
     createAthlete,
@@ -8,28 +8,28 @@ import {
     getAthleteById,
     updateAthlete,
     deleteAthlete,
-  } from './controllers/athleteController';
+} from './controllers/athleteController';
 import { addMetric, getMetrics } from './controllers/metricController';
-
+import { authenticateJWT } from './utils/auth';
 
 dotenv.config();
 
 const app = new Hono();
 
 // Athlete Routes
-app.post('/athletes', createAthlete);
 app.get('/athletes', getAllAthletes);
-app.get('/athletes/:id', getAthleteById);
-app.put('/athletes/:id', updateAthlete);
-app.delete('/athletes/:id', deleteAthlete);
+app.post('/athletes', authenticateJWT, createAthlete);
+app.get('/athletes/:id', authenticateJWT, getAthleteById);
+app.put('/athletes/:id', authenticateJWT, updateAthlete);
+app.delete('/athletes/:id', authenticateJWT, deleteAthlete);
 
 // Metric Routes
-app.post('/athletes/:id/metrics', addMetric);
-app.get('/athletes/:id/metrics', getMetrics);
+app.post('/athletes/:id/metrics', authenticateJWT, addMetric);
+app.get('/athletes/:id/metrics', authenticateJWT, getMetrics);
 
 app.get('/', (c) => c.text('Athlete Performance API'));
 
 serve({
-  fetch: app.fetch,
-  port: 4000,
-})
+    fetch: app.fetch,
+    port: 4000,
+});

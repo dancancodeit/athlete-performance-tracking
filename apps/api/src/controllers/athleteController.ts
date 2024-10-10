@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Context } from 'hono';
+import { generateToken } from '../utils/auth';
+import { setCookie } from 'hono/cookie';
 
 const prisma = new PrismaClient();
 
@@ -14,6 +16,9 @@ export const createAthlete = async (c: Context) => {
 
 // Get All Athletes
 export const getAllAthletes = async (c: Context) => {
+  const token = generateToken('freeUser');
+  setCookie(c, 'token', token);
+
   const athletes = await prisma.athlete.findMany();
   return c.json(athletes);
 };
